@@ -1,0 +1,34 @@
+{
+  "name": "web-api",
+  "version": "0.0.1",
+  "main": "src/app.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node -r dotenv/config src/app.js",
+    "dev": "nodemon -r dotenv/config src/app.js",
+    "format": "prettier --write 'src/**/*.{js,json}'",
+    "lint": "eslint src/**",
+    "test": "jest src",
+    "coverage": "jest --collectCoverageFrom=src/**.js --coverage src",
+    "db:migrate": "npm run knex migrate:latest",
+    "db:rollback": "npm run knex migrate:rollback",
+    "knex": "node -r dotenv/config ./node_modules/.bin/knex --knexfile=./src/knexfile.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-promise-router": "^3.0.2",
+    "knex": "^0.16.3",
+    "mysql": "^2.16.0",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.0.1",
+    "eslint-config-prettier": "^4.1.0",
+    "jest": "^24.1.0",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.5",
+    "prettier": "^1.13.6"
+  }
+}
