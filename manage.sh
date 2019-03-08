@@ -57,8 +57,14 @@ case "$1" in
 "start_deps")
     buildAndStartDeps
 ;;
-"stop_deps")
+"stop")
     stopAll
+;;
+"db_migrate")
+    docker exec -it project-api yarn db:migrate
+;;
+"db_rollback")
+    docker exec -it project-api yarn db:rollback
 ;;
 *)
     echo "Usage: ./manage.sh start_all | start_deps"
