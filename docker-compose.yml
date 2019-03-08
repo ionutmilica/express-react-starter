@@ -5,6 +5,8 @@ services:
     container_name: project-cache
     ports:
       - "6379:6379"
+    depends_on:
+      - database
     networks:
       - backend
 
@@ -24,7 +26,8 @@ services:
       - MYSQL_PASSWORD=secret
 
   api:
-    image: "node:10"
+    build:
+      context: ./web-api
     container_name: project-api
     user: "node"
     working_dir: /home/node/app
@@ -36,18 +39,22 @@ services:
       - DB_PASSWORD=secret
       - DB_NAME=project
     volumes:
-      - ./web-api:/home/node/app
+      - ./web-api/src:/home/node/app/src
     command: "yarn dev"
     expose:
       - "8080"
     ports:
       - "8080:8080"
+    depends_on:
+      - cache
+      - database
     networks:
       - backend
       - frontend
 
   ui:
-    image: "node:10"
+    build:
+      context: ./web-ui
     container_name: project-ui
     user: "node"
     working_dir: /home/node/app
@@ -55,12 +62,14 @@ services:
       - NODE_ENV=development
       - API_URL=project-api
     volumes:
-      - ./web-ui:/home/node/app
+      - ./web-ui/src:/home/node/app/src
     command: "yarn start"
     expose:
       - "3000"
     ports:
       - "3000:3000"
+    depends_on:
+      - api
     networks:
       - frontend
 

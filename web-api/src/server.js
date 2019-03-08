@@ -32,7 +32,7 @@ async function makeServer() {
     app.use(morgan('dev'));
   }
 
-  const logger = makeLogger({ env });
+  const logger = makeLogger(env);
   const db = connect({
     driver,
     host,
