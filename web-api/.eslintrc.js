@@ -4,13 +4,11 @@ module.exports = {
     node: true,
   },
   extends: ['eslint:recommended', 'prettier'],
+  "plugins": ["prettier"],
   parserOptions: {
     ecmaVersion: 2018,
   },
   rules: {
-    indent: ['error', 2],
-    'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
+    "prettier/prettier": "error",
   },
 };
