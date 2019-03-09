@@ -4,6 +4,10 @@ function hasCommand() {
   command -v "$1" >/dev/null 2>&1
 }
 
+function buildAll {
+    docker-compose build
+}
+
 function stopAll {
     docker-compose down
 }
@@ -38,6 +42,7 @@ function startApps {
 
 function buildAndStartAll {
     stopAll
+    buildAll
     startDatabase
     startCache
     startApps
