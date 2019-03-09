@@ -38,6 +38,9 @@ services:
       - DB_USERNAME=project
       - DB_PASSWORD=secret
       - DB_NAME=project
+      - CACHE_DRIVER=redis
+      - CACHE_HOST=project-cache
+      - CACHE_PORT=6379
     volumes:
       - ./web-api/src:/home/node/app/src
     command: "yarn dev"

@@ -16,11 +16,14 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
+    "connect-redis": "^3.4.0",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-promise-router": "^3.0.2",
+    "express-session": "^1.15.6",
     "knex": "^0.16.3",
     "mysql": "^2.16.0",
+    "redis": "^2.8.0",
     "winston": "^3.0.0"
   },
   "devDependencies": {
@@ -37,8 +40,13 @@
       "es6": true,
       "node": true
     },
-    "extends": ["eslint:recommended", "prettier"],
-    "plugins": ["prettier"],
+    "extends": [
+      "eslint:recommended",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
     "parserOptions": {
       "ecmaVersion": 2018
     },

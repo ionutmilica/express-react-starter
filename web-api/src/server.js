@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const morgan = require('morgan');
+const redis = require('redis');
+const redisStore = require('connect-redis')(session);
 const makeDI = require('./di');
 const makeLogger = require('./lib/logger');
 const makeRoutes = require('./routes');
@@ -25,12 +28,20 @@ async function makeServer() {
     DB_USERNAME: username,
     DB_PASSWORD: password,
     DB_NAME: database,
+    CACHE_HOST,
+    CACHE_PORT,
+    APP_SECRET,
   } = process.env;
   const app = express();
 
   if (env === 'development') {
     app.use(morgan('dev'));
   }
+
+  const redisClient = redis.createClient({
+    host: CACHE_HOST,
+    port: CACHE_PORT,
+  });
 
   const logger = makeLogger(env);
   const db = connect({
@@ -48,6 +59,15 @@ async function makeServer() {
     logger,
   });
 
+  app.use(
+    session({
+      secret: APP_SECRET || 'dev',
+      resave: false,
+      saveUninitialized: true,
+      cookie: { secure: false },
+      store: new redisStore({ client: redisClient, ttl: 86400 }),
+    }),
+  );
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(makeRoutes(context));
