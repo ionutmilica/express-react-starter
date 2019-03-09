@@ -31,5 +31,19 @@
     "morgan": "^1.9.0",
     "nodemon": "^1.17.5",
     "prettier": "^1.13.6"
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "extends": ["eslint:recommended", "prettier"],
+    "plugins": ["prettier"],
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "rules": {
+      "prettier/prettier": "error"
+    }
   }
 }
